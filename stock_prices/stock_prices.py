@@ -5,8 +5,9 @@ import argparse
 # receives list of prices
 # returns the maximum profit made from a single buy and sell
 # find profit by subtracting the buy price from the sell price
+# Nested loop, O(n^2) time efficiency
 
-def find_max_profit(prices):
+def find_max_profit1(prices):
     # Edge case: prices does not contain enough elements
     if len(prices) < 2:
         return "Error: Price list must contain at least two prices."
@@ -34,12 +35,49 @@ def find_max_profit(prices):
                     sell_price = prices[j]
 
                     print(f"To maximize profit, you should buy at {buy_price} and sell at {sell_price} for ${max_profit} in profit.")
+
+        # Catches non-int values in list and throws error
         except:
             return "Invalid data in list. Integers only."
 
     return max_profit
 
-# Nested loop, O(n^2) time efficiency
+
+# Increase efficiency by only running one loop
+# Find max(remaining_prices_list) and compare to prices[i]
+# Now O(n) efficiency
+
+def find_max_profit(prices):
+    # Edge case: prices does not contain enough elements
+    if len(prices) < 2:
+        return "Error: Price list must contain at least two prices."
+
+    # store a max_profit
+    max_profit = float("-inf")
+
+    # optional: store prices that lead to max profit in case information is useful 
+    buy_price = 0
+    sell_price = 0
+
+    # iterate through the list
+    for i in range(0, len(prices)-1):
+        try:
+        # iterate through prices list
+            shortened_prices_list = prices[i+1:]
+            # find highest int of remainder of list after prices[i]
+            remaining_max = max(shortened_prices_list)
+            # if remaining max - prices[i] would result in higher profit
+            if remaining_max - prices[i] > max_profit:
+                # Update max profit and buy/sell prices
+                max_profit = remaining_max - prices[i]
+                buy_price = prices[i]
+                sell_price = remaining_max
+                
+        # Catches non-int values in list and throws error
+        except:
+            return "Invalid data in list. Integers only."
+
+    return max_profit
 
 
 # if __name__ == '__main__':
