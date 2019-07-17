@@ -2,11 +2,8 @@
 
 import argparse
 
-# receives list of prices
-# returns the maximum profit made from a single buy and sell
-# find profit by subtracting the buy price from the sell price
-# Nested loop, O(n^2) time efficiency
 
+# Nested loop, O(n^2) time efficiency
 def find_max_profit1(prices):
     # Edge case: prices does not contain enough elements
     if len(prices) < 2:
@@ -62,7 +59,6 @@ def find_max_profit(prices):
     # iterate through the list
     for i in range(0, len(prices)-1):
         try:
-        # iterate through prices list
             shortened_prices_list = prices[i+1:]
             # find highest int of remainder of list after prices[i]
             remaining_max = max(shortened_prices_list)
